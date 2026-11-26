@@ -1,0 +1,141 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#04060c"><link rel="manifest" href="manifest.json"><link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png"><title>NEXUS FARM</title>
+<style>
+:root{--a:#00f5d4;--b:#9b5de5;--c:#f15bb5;--g:#fee440;--bg:#04060c;--p:#0a0e1c;--t:#e6eeff;--m:#7b87a6}
+[data-t="1"]{--a:#9b5de5;--b:#f15bb5}[data-t="2"]{--a:#f15bb5;--b:#fee440}[data-t="3"]{--a:#fee440;--b:#00f5d4}
+*{box-sizing:border-box;margin:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--t);font:15px system-ui,sans-serif;overscroll-behavior:none}
+body:not(.eco){background:radial-gradient(120% 55% at 50% 0,color-mix(in srgb,var(--a) 13%,var(--bg)),var(--bg) 70%)}
+body.eco{--bg:#000;--p:#000}
+#app{height:100%;display:flex;flex-direction:column;padding-top:env(safe-area-inset-top)}
+main{flex:1;overflow:auto;padding:10px 14px}
+.v{display:none}.v.on{display:block}
+.card{background:var(--p);border:1px solid #ffffff17;border-radius:16px;padding:14px;margin-bottom:10px}
+h3{font-size:13px;color:var(--m);margin-bottom:8px;font-weight:600}
+input,select,button{font:inherit;color:inherit;background:#ffffff0d;border:1px solid #ffffff22;border-radius:12px;padding:11px;min-width:0}
+button{touch-action:manipulation}button:active{transform:scale(.96)}button.on{border-color:var(--a);color:var(--a)}
+.row{display:flex;gap:8px;margin-bottom:8px;align-items:center}.row>input,.row>select{flex:1}
+.pri{background:linear-gradient(135deg,var(--a),var(--b));color:#04060c;font-weight:800;border:0}
+.hud{text-align:center;position:relative;overflow:hidden;padding-bottom:10px}
+.clk{font-weight:800;line-height:1;font-variant-numeric:tabular-nums;font-size:min(26vw,118px);margin-top:6px}
+body:not(.eco) .clk{text-shadow:0 0 24px var(--a)}
+#ss{font-size:.38em;color:var(--a);margin-left:6px}#ap{font-size:.25em;color:var(--g);margin-left:4px}
+#dt{color:var(--m);margin:10px 0 8px}
+#sc{position:absolute;left:0;bottom:0;width:70px;height:2px;background:var(--a);will-change:transform}.eco #sc{display:none}
+.st{display:flex;gap:8px}.st .card{flex:1;text-align:center;padding:10px;font-size:21px;font-weight:700}.st small{display:block;font-size:11px;color:var(--m);font-weight:400}
+#zb{width:100%;padding:18px;font-size:17px;margin-bottom:10px;border-radius:16px}
+.in{width:100%;margin-bottom:8px}
+#seg{display:flex;gap:3px;margin:10px 0 6px}#seg i{flex:1;height:14px;border-radius:3px;background:#ffffff14;transform:skewX(-15deg)}#seg i.on{background:linear-gradient(var(--a),var(--b))}
+#gp{font-weight:700;color:var(--g)}
+.t{display:flex;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid #ffffff10}.t.d b{text-decoration:line-through;opacity:.5}.t div{flex:1;min-width:0;overflow-wrap:anywhere}.t small{color:var(--m);display:block}.t button{padding:8px 10px}
+.tabs{display:flex;gap:6px;margin:6px 0}.tabs button{flex:1;padding:9px}
+nav{display:flex;background:#000;border-top:1px solid #ffffff1a;padding-bottom:env(safe-area-inset-bottom)}nav button{flex:1;border:0;background:none;border-radius:0;padding:9px 0;font-size:11px;color:var(--m)}nav button.on{color:var(--a)}nav span{display:block;font-size:21px}
+.rw{position:relative;width:min(74vw,300px);margin:6px auto}.rw svg{width:100%;display:block}.rw circle{fill:none;stroke-width:8}
+#rg{stroke:var(--a);stroke-dasharray:553;stroke-dashoffset:553;stroke-linecap:round;transform:rotate(-90deg);transform-box:fill-box;transform-origin:center}
+#tm{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:800 40px system-ui;font-variant-numeric:tabular-nums}
+#bk{position:fixed;inset:0;background:#000;z-index:9;display:none;flex-direction:column;align-items:center;justify-content:center;gap:14px}#bk.on{display:flex}
+#bc{font:700 56px system-ui;font-variant-numeric:tabular-nums;color:#9aa4bd}#bt{font:800 22vw system-ui;font-variant-numeric:tabular-nums;color:var(--a)}
+.toast{position:fixed;left:50%;top:12%;z-index:20;background:var(--p);border:1px solid var(--a);padding:10px 16px;border-radius:20px;animation:tt 2.4s forwards;pointer-events:none;width:max-content;max-width:90vw;text-align:center}
+@keyframes tt{0%{transform:translate(-50%,20px);opacity:0}12%,80%{transform:translate(-50%,0);opacity:1}100%{transform:translate(-50%,-10px);opacity:0}}
+.sw{display:flex;gap:10px}.sw button{width:44px;height:44px;border-radius:50%}
+</style></head><body><div id="app"><main>
+<section class="v on" id="v-h">
+<div class="card hud"><div class="clk"><span id="hm">00:00</span><span id="ss">00</span><span id="ap"></span></div><div id="dt"></div><button id="fmt">24H</button><i id="sc"></i></div>
+<div class="st"><div class="card"><span id="gm">0</span> 💎<small>Cristales</small></div><div class="card"><span id="fr">0</span> ⏳<small>Min libres</small></div><div class="card"><span id="cb">x1.00</span><small>Combo</small></div></div>
+<button class="pri" id="zb">⚡ Protocolo anti-flojera · 2 min</button>
+<div class="card"><h3>Objetivo grande</h3><input class="in" id="gt" placeholder="¿Cuál es tu meta principal?"><div class="row"><span>Meta:</span><input id="gn" type="number" min="1" inputmode="numeric"><span>💎</span></div><div id="seg"></div><div class="row" style="justify-content:space-between;margin:0"><span id="gp"></span><button id="gr">Reiniciar</button></div></div>
+<div class="card"><h3>Bóveda de tiempo libre</h3><p id="vw" style="margin-bottom:10px"></p><div class="row"><button data-sp="5" style="flex:1">Usar 5 min</button><button data-sp="15" style="flex:1">15 min</button><button data-sp="30" style="flex:1">30 min</button></div></div>
+</section>
+<section class="v" id="v-t">
+<div class="card"><div class="row"><input id="tt" placeholder="Nueva tarea…" enterkeyhint="done"><button class="pri" id="ta">＋</button></div><div class="row"><select id="td"></select><select id="tc"></select><button id="tp">📌</button></div><input class="in" id="tn" placeholder="Notas (opcional)" style="margin:0"></div>
+<div class="tabs"><button data-f="p">Pendientes</button><button data-f="c">Completadas</button><button data-f="a">Todas</button></div>
+<div id="tl"></div></section>
+<section class="v" id="v-r"><div class="card"><div class="rw"><svg viewBox="0 0 200 200"><circle cx="100" cy="100" r="88" stroke="#ffffff14"/><circle id="rg" cx="100" cy="100" r="88"/></svg><div id="tm">25:00</div></div>
+<div class="row" id="pre" style="justify-content:center"><button data-m="15">15m</button><button data-m="25">25m</button><button data-m="45">45m</button><input id="cm" type="number" inputmode="numeric" min="1" max="180" placeholder="otro" style="width:80px;flex:none"></div>
+<div class="row"><button class="pri" id="go" style="flex:1"></button><button id="bko">🌑</button></div>
+<p style="text-align:center;color:var(--m);font-size:13px">Cada bloque completado sube el combo hasta x2.00 y abre un cofre. 🌑 activa la pantalla negra anti-distracción.</p></div></section>
+<section class="v" id="v-s"><div class="card"><h3>Nueva recompensa</h3><div class="row"><input id="sn" placeholder="Ej: Un capítulo de mi serie"><input id="sc2" type="number" inputmode="numeric" placeholder="💎" style="flex:none;width:70px"><button class="pri" id="sa">＋</button></div></div><div class="card" id="sl"></div></section>
+<section class="v" id="v-a"><div class="card"><h3>Rendimiento</h3><button id="eco" style="width:100%"></button></div>
+<div class="card"><h3>Tema de color</h3><div class="sw"><button data-th="0" style="background:#00f5d4"></button><button data-th="1" style="background:#9b5de5"></button><button data-th="2" style="background:#f15bb5"></button><button data-th="3" style="background:#fee440"></button></div></div>
+<div class="card"><h3>Respaldo</h3><div class="row"><button id="ex" style="flex:1">⬇ Exportar JSON</button><label class="row" style="flex:1;margin:0"><span style="flex:1;text-align:center;padding:11px;border:1px solid #ffffff22;border-radius:12px">⬆ Importar</span><input id="im" type="file" accept=".json,application/json" hidden></label></div><button id="rs" style="width:100%">Borrar todo el progreso</button></div></section>
+</main>
+<nav><button class="on" data-v="h"><span>🏠</span>Inicio</button><button data-v="t"><span>✅</span>Tareas</button><button data-v="r"><span>⚛️</span>Reactor</button><button data-v="s"><span>🎁</span>Tienda</button><button data-v="a"><span>⚙️</span>Ajustes</button></nav></div>
+<div id="bk"><div id="bc"></div><div id="bt"></div><button id="bkx">Salir</button></div>
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],K='nexusfarm_v1',CIRC=553;
+const DF={r:['Rápida',2,2],n:['Normal',5,5],d:['Difícil',10,10],j:['Jefe',25,30]},CT=['Estudio','Trabajo','Casa','Personal'];
+const D=()=>({gems:0,free:0,earned:0,goal:{t:'',n:100},tasks:[],shop:[{id:1,n:'Un capítulo de mi serie',c:20},{id:2,n:'30 min de videojuegos',c:30}],blocks:0,h24:true,eco:false,th:0,filter:'p'});
+let S=D();try{S=Object.assign(D(),JSON.parse(localStorage.getItem(K)))}catch(e){}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const mult=()=>Math.min(2,1+.1*S.blocks),p2=n=>String(n).padStart(2,'0');
+let SEL=25,T=null,lastS=-1,lastTm='',pin=false,wl=null,sx=0;
+function toast(m){const d=document.createElement('div');d.className='toast';d.textContent=m;document.body.appendChild(d);d.onanimationend=()=>d.remove()}
+function gain(g,m,msg){S.gems+=g;S.earned+=g;S.free+=m;save();toast(msg)}
+function go(v){$$('.v').forEach(e=>e.classList.toggle('on',e.id=='v-'+v));$$('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v==v))}
+function init(){document.documentElement.dataset.t=S.th;document.body.classList.toggle('eco',S.eco);
+$('#eco').textContent=S.eco?'🔋 Ahorro AMOLED activo (60 FPS, negro puro)':'⚡ 120Hz Ultra Fluido activo';$('#fmt').textContent=S.h24?'24H':'12H';
+$('#gt').value=S.goal.t;$('#gn').value=S.goal.n;lastS=-1;$('meta[name=theme-color]').content=S.eco?'#000000':'#04060c'}
+function R(){
+$('#gm').textContent=S.gems;$('#fr').textContent=S.free;$('#cb').textContent='x'+mult().toFixed(2);
+const pc=Math.min(100,Math.floor(S.earned*100/Math.max(1,S.goal.n)));
+$('#gp').textContent=pc+'% · '+Math.min(S.earned,S.goal.n)+'/'+S.goal.n+' 💎'+(pc>=100?' 🏆':'');
+$$('#seg i').forEach((e,i)=>e.classList.toggle('on',i<pc/5));
+const pe=S.tasks.filter(t=>!t.d).length;
+$('#vw').innerHTML=pe?'⚠️ Tienes <b>'+pe+'</b> tarea(s) pendiente(s) antes de gastar tu tiempo libre.':'✅ Todo al día. Descansa sin culpa.';
+$$('.tabs button').forEach(b=>b.classList.toggle('on',b.dataset.f==S.filter));
+$('#tl').innerHTML=S.tasks.filter(t=>S.filter=='a'||t.d==(S.filter=='c')).sort((a,b)=>(b.p-a.p)||(b.id-a.id)).map(t=>{const f=DF[t.df]||DF.n;return `<div class="t${t.d?' d':''}"><button data-a="ok" data-i="${t.id}">${t.d?'✔':'○'}</button><div><b>${t.p?'📌 ':''}${esc(t.t)}</b><small>${f[0]} · ${esc(t.ct)} · +${f[1]}💎 +${f[2]} min</small>${t.n?'<small>'+esc(t.n)+'</small>':''}</div><button data-a="pin" data-i="${t.id}">📌</button><button data-a="del" data-i="${t.id}">🗑</button></div>`}).join('')||'<p style="color:var(--m);padding:14px 0">No hay tareas aquí. Agrega una arriba.</p>';
+$('#sl').innerHTML=S.shop.map(i=>`<div class="t"><div><b>${esc(i.n)}</b><small>${i.c} 💎</small></div><button class="${S.gems>=i.c?'pri':''}" data-a="buy" data-i="${i.id}">Canjear</button><button data-a="del" data-i="${i.id}">🗑</button></div>`).join('')||'<p style="color:var(--m)">Crea tu primera recompensa real.</p>';
+$$('#pre button').forEach(b=>b.classList.toggle('on',+b.dataset.m==SEL));
+$('#go').textContent=T?'⏹ Cancelar (pierdes el combo)':'▶ Iniciar '+SEL+' min';
+if(!T){$('#tm').textContent=p2(SEL)+':00';$('#zb').textContent='⚡ Protocolo anti-flojera · 2 min'}}
+function clk(){const d=new Date(),s=d.getSeconds();if(s==lastS)return;lastS=s;let h=d.getHours(),ap='';
+if(!S.h24){ap=h>=12?'PM':'AM';h=h%12||12}
+const hm=(S.h24?p2(h):h)+':'+p2(d.getMinutes());$('#hm').textContent=hm;$('#ss').textContent=p2(s);$('#ap').textContent=ap;
+const f=d.toLocaleDateString('es-PE',{weekday:'long',day:'numeric',month:'long',year:'numeric'});$('#dt').textContent=f[0].toUpperCase()+f.slice(1);$('#bc').textContent=hm+':'+p2(s)}
+async function wake(){try{wl=await navigator.wakeLock.request('screen')}catch(e){}}
+function startT(min,k){if(T)return toast('Ya hay un temporizador activo');T={end:Date.now()+min*6e4,tot:min*6e4,k,min};lastTm='';wake();go('r');R()}
+function stopT(fail){if(fail&&T&&T.k=='f'){S.blocks=0;save()}T=null;try{wl&&wl.release()}catch(e){}wl=null;$('#rg').style.strokeDashoffset=CIRC;$('#bk').classList.remove('on');R()}
+function done(){const t=T;stopT(false);navigator.vibrate&&navigator.vibrate([200,100,200]);
+if(t.k=='z')gain(5,2,'⚡ Flojera vencida: +5 💎 +2 min');
+else{const m=mult(),g=Math.round(t.min/5*m)+1,ch=1+Math.floor(Math.random()*8),xm=Math.random()>.7?5:0;S.blocks++;gain(g+ch,Math.round(t.min/5)+xm,'📦 Cofre +'+ch+'💎 · Bloque +'+g+'💎 · combo x'+m.toFixed(2)+(xm?' · +5 min extra':''))}
+R()}
+function tick(){const left=Math.max(0,T.end-Date.now());$('#rg').style.strokeDashoffset=CIRC*left/T.tot;
+const s=Math.ceil(left/1000),x=p2(Math.floor(s/60))+':'+p2(s%60);
+if(x!=lastTm){lastTm=x;$('#tm').textContent=$('#bt').textContent=x;if(T.k=='z')$('#zb').textContent='⚡ '+x+' · toca para cancelar'}
+if(left<=0)done()}
+let last=performance.now(),acc=0;
+function loop(n){requestAnimationFrame(loop);acc+=n-last;last=n;if(S.eco&&acc<15)return;const dt=Math.min(acc,100);acc=0;
+clk();if(!S.eco){sx=(sx+dt*.18)%420;$('#sc').style.transform='translateX('+sx+'px)'}if(T)tick()}
+$$('nav button').forEach(b=>b.onclick=()=>go(b.dataset.v));
+$('#fmt').onclick=()=>{S.h24=!S.h24;save();init()};
+$('#zb').onclick=()=>{if(T&&T.k=='z')stopT(false);else startT(2,'z')};
+$('#gt').oninput=e=>{S.goal.t=e.target.value;save()};
+$('#gn').oninput=e=>{S.goal.n=Math.max(1,+e.target.value||1);save();R()};
+$('#gr').onclick=()=>{if(confirm('¿Reiniciar el progreso del objetivo?')){S.earned=0;save();R()}};
+$$('[data-sp]').forEach(b=>b.onclick=()=>{const m=+b.dataset.sp;if(S.free<m)return toast('No tienes tantos minutos libres');
+const p=S.tasks.filter(t=>!t.d).length;if(p&&!confirm('Tienes '+p+' tarea(s) pendiente(s). ¿Usar tu tiempo libre igual?'))return;S.free-=m;save();R();toast('⏳ Disfruta tus '+m+' min')});
+$('#td').innerHTML=Object.entries(DF).map(([k,v])=>`<option value="${k}"${k=='n'?' selected':''}>${v[0]} +${v[1]}💎</option>`).join('');
+$('#tc').innerHTML=CT.map(c=>`<option>${c}</option>`).join('');
+$('#tp').onclick=()=>{pin=!pin;$('#tp').classList.toggle('on',pin)};
+function add(){const t=$('#tt').value.trim();if(!t)return;S.tasks.push({id:Date.now(),t,df:$('#td').value,ct:$('#tc').value,n:$('#tn').value.trim(),p:pin,d:false});$('#tt').value=$('#tn').value='';save();R()}
+$('#ta').onclick=add;$('#tt').onkeydown=$('#tn').onkeydown=e=>{if(e.key=='Enter')add()};
+$$('.tabs button').forEach(b=>b.onclick=()=>{S.filter=b.dataset.f;save();R()});
+$('#tl').onclick=e=>{const b=e.target.closest('button');if(!b)return;const t=S.tasks.find(x=>x.id==b.dataset.i);if(!t)return;
+if(b.dataset.a=='ok'&&!t.d){t.d=true;const f=DF[t.df]||DF.n;gain(f[1],f[2],'✅ +'+f[1]+'💎 +'+f[2]+' min libres')}
+else if(b.dataset.a=='pin')t.p=!t.p;else if(b.dataset.a=='del')S.tasks=S.tasks.filter(x=>x!=t);save();R()};
+$('#sa').onclick=()=>{const n=$('#sn').value.trim(),c=+$('#sc2').value;if(!n||!(c>0))return toast('Escribe un nombre y un costo');S.shop.push({id:Date.now(),n,c});$('#sn').value=$('#sc2').value='';save();R()};
+$('#sl').onclick=e=>{const b=e.target.closest('button');if(!b)return;const i=S.shop.find(x=>x.id==b.dataset.i);if(!i)return;
+if(b.dataset.a=='del')S.shop=S.shop.filter(x=>x!=i);else if(S.gems>=i.c){S.gems-=i.c;toast('🎉 Canjeado: '+i.n)}else toast('Te faltan '+(i.c-S.gems)+' 💎');save();R()};
+$$('#pre button').forEach(b=>b.onclick=()=>{if(T)return;SEL=+b.dataset.m;$('#cm').value='';R()});
+$('#cm').oninput=e=>{const v=Math.min(180,+e.target.value|0);if(!T&&v>0){SEL=v;R()}};
+$('#go').onclick=()=>{if(T){if(confirm('¿Cancelar? Perderás el combo.'))stopT(true)}else startT(SEL,'f')};
+$('#bko').onclick=()=>$('#bk').classList.add('on');$('#bkx').onclick=()=>$('#bk').classList.remove('on');
+$('#eco').onclick=()=>{S.eco=!S.eco;save();init()};
+$$('[data-th]').forEach(b=>b.onclick=()=>{S.th=+b.dataset.th;save();init()});
+$('#ex').onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(S)],{type:'application/json'}));a.download='nexus-farm-respaldo.json';a.click()};
+$('#im').onchange=e=>{const f=e.target.files[0];if(!f)return;f.text().then(x=>{S=Object.assign(D(),JSON.parse(x));save();init();R();toast('Respaldo importado')}).catch(()=>toast('Archivo no válido'))};
+$('#rs').onclick=()=>{if(confirm('¿Borrar TODO el progreso?')){S=D();save();init();R()}};
+$('#seg').innerHTML='<i></i>'.repeat(20);
+init();R();requestAnimationFrame(loop);
+if('serviceWorker' in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('sw.js').catch(()=>{});
+</script></body></html>
